@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Gift, Star, TreePine } from 'lucide-react';
+import FallingSnow from './FallingSnow';
 
 const ChristmasCountdown = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -42,8 +43,9 @@ const ChristmasCountdown = () => {
   const isChristmas = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-600 via-red-700 to-green-700 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full text-center">
+    <div className="min-h-screen bg-gradient-to-br from-red-600 via-red-700 to-green-700 flex items-center justify-center p-4 relative">
+      <FallingSnow />
+      <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full text-center relative z-20">
         <div className="flex justify-center mb-6">
           <div className="flex items-center space-x-4">
             <TreePine className="text-green-600 w-12 h-12" />
