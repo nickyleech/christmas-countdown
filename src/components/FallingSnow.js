@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 const FallingSnow = () => {
   const canvasRef = useRef(null);
@@ -6,6 +7,7 @@ const FallingSnow = () => {
   const snowflakes = useRef([]);
   const [isMobile, setIsMobile] = useState(false);
   const [isReduced, setIsReduced] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     // Detect mobile devices and reduced motion preference
@@ -51,8 +53,9 @@ const FallingSnow = () => {
       opacity: Math.random() * 0.8 + 0.2
     });
     
-    // Reduce snowflake count on mobile for better performance
-    const snowflakeCount = isMobile ? 75 : 150;
+    // Use theme-aware snowflake count, with mobile optimization
+    const baseCount = theme.snow?.count || 150;
+    const snowflakeCount = isMobile ? Math.floor(baseCount * 0.5) : baseCount;
     snowflakes.current = [];
     
     for (let i = 0; i < snowflakeCount; i++) {
@@ -68,7 +71,9 @@ const FallingSnow = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         snowflakes.current.forEach((flake, index) => {
-          flake.y += flake.speed;
+          // Use theme-aware speed
+          const speed = flake.speed * (theme.snow?.speed || 1);
+          flake.y += speed;
           flake.x += flake.wind;
           
           if (flake.y > canvas.height) {
@@ -83,7 +88,8 @@ const FallingSnow = () => {
           
           ctx.beginPath();
           ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+          // Use theme-aware snow color
+          ctx.fillStyle = theme.snow?.color || `rgba(255, 255, 255, ${flake.opacity})`;
           ctx.fill();
         });
         
@@ -101,7 +107,7 @@ const FallingSnow = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isMobile, isReduced]);
+  }, [isMobile, isReduced, theme]);
 
   if (isReduced) {
     return null; // Don't render snow if user prefers reduced motion

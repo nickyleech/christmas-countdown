@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import ChristmasCountdown from './components/ChristmasCountdown';
 import InstallButton from './components/InstallButton';
+import ThemeSelector from './components/ThemeSelector';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { registerSW, requestNotificationPermission } from './pwaUtils';
 
 function App() {
@@ -13,10 +15,13 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <ChristmasCountdown />
-      <InstallButton />
-    </div>
+    <ThemeProvider>
+      <div className="App">
+        <ChristmasCountdown />
+        <ThemeSelector />
+        <InstallButton />
+      </div>
+    </ThemeProvider>
   );
 }
 
