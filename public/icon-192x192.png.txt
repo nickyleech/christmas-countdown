@@ -1,0 +1,11 @@
+This file represents a 192x192 PNG icon for the Christmas Countdown PWA.
+In a real implementation, this would be a Christmas-themed icon featuring:
+- A red and green color scheme
+- Christmas tree or gift box imagery
+- The app name or countdown timer visual
+- Optimized for various backgrounds and contexts
+
+To complete the PWA setup:
+1. Replace this .txt file with an actual 192x192 PNG icon
+2. Create the corresponding 512x512 PNG icon
+3. Ensure icons follow PWA icon guidelines
