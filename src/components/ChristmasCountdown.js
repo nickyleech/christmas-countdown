@@ -17,9 +17,26 @@ const FESTIVE_QUOTES = [
 
 const LIGHT_COLORS = ['#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff1a1a', '#00cc44', '#ffcc00'];
 
+// Bulb positions along the sagging wire (x%, y in px from top)
+const BULB_POSITIONS = LIGHT_COLORS.map((_, i) => {
+  const t = i / (LIGHT_COLORS.length - 1);
+  // Parabolic sag: deeper in the middle
+  const sag = Math.sin(t * Math.PI) * 14;
+  return { x: t * 100, y: 6 + sag };
+});
+
 const ChristmasLights = () => (
   <div className="christmas-lights" aria-hidden="true">
-    <div className="light-wire" />
+    {/* SVG wire that sags between endpoints */}
+    <svg viewBox="0 0 100 36" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M 0,6 Q 25,20 50,20 Q 75,20 100,6"
+        stroke="#444"
+        strokeWidth="0.6"
+        fill="none"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
     {LIGHT_COLORS.map((color, i) => (
       <div
         key={i}
@@ -28,7 +45,8 @@ const ChristmasLights = () => (
           '--bulb-color': color,
           '--twinkle-duration': `${1.5 + Math.random() * 2}s`,
           '--twinkle-delay': `${Math.random() * 3}s`,
-          left: `${(i / (LIGHT_COLORS.length - 1)) * 100}%`,
+          left: `${BULB_POSITIONS[i].x}%`,
+          top: `${BULB_POSITIONS[i].y}px`,
           transform: 'translateX(-50%)',
         }}
       />
@@ -36,17 +54,99 @@ const ChristmasLights = () => (
   </div>
 );
 
-const Ornament = ({ theme }) => (
-  <div className="ornament" aria-hidden="true">
+const Ornament = ({ theme, side }) => (
+  <div className={side === 'left' ? 'ornament-left' : 'ornament'} aria-hidden="true">
     <div className="ornament-string" />
     <div className="ornament-cap" />
-    <div className="ornament-ball" style={{ '--ornament-color': theme.gradientColors[0] }} />
+    <div
+      className="ornament-ball"
+      style={{ '--ornament-color': side === 'left' ? theme.gradientColors[2] : theme.gradientColors[0] }}
+    />
+  </div>
+);
+
+const Holly = ({ position }) => (
+  <div className={`holly-corner holly-corner-${position}`} aria-hidden="true">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      {/* Holly leaves */}
+      <ellipse cx="10" cy="18" rx="8" ry="4" fill="#15803d" transform="rotate(-30 10 18)" />
+      <ellipse cx="18" cy="12" rx="8" ry="4" fill="#16a34a" transform="rotate(20 18 12)" />
+      {/* Leaf veins */}
+      <line x1="4" y1="16" x2="16" y2="20" stroke="#0f5c2e" strokeWidth="0.5" />
+      <line x1="12" y1="10" x2="24" y2="14" stroke="#0f7a3a" strokeWidth="0.5" />
+      {/* Berries */}
+      <circle cx="14" cy="14" r="2.5" fill="#dc2626" />
+      <circle cx="17" cy="17" r="2.5" fill="#dc2626" />
+      <circle cx="12" cy="17" r="2" fill="#b91c1c" />
+      {/* Berry highlights */}
+      <circle cx="13.3" cy="13.3" r="0.8" fill="rgba(255,255,255,0.5)" />
+      <circle cx="16.3" cy="16.3" r="0.8" fill="rgba(255,255,255,0.5)" />
+    </svg>
   </div>
 );
 
 const SantaSleigh = () => (
   <div className="santa-sleigh" aria-hidden="true">
-    🦌🦌🛷🎅
+    <svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+      {/* Reindeer silhouettes */}
+      <g fill="#3a2518" opacity="0.9">
+        {/* Lead reindeer */}
+        <ellipse cx="20" cy="28" rx="8" ry="5" />
+        <circle cx="14" cy="22" r="4" />
+        <line x1="12" y1="18" x2="9" y2="12" stroke="#3a2518" strokeWidth="1.5" />
+        <line x1="9" y1="12" x2="7" y2="10" stroke="#3a2518" strokeWidth="1" />
+        <line x1="9" y1="12" x2="11" y2="10" stroke="#3a2518" strokeWidth="1" />
+        <line x1="16" y1="18" x2="14" y2="12" stroke="#3a2518" strokeWidth="1.5" />
+        <line x1="14" y1="12" x2="12" y2="10" stroke="#3a2518" strokeWidth="1" />
+        <line x1="14" y1="12" x2="16" y2="10" stroke="#3a2518" strokeWidth="1" />
+        <line x1="18" y1="33" x2="17" y2="40" stroke="#3a2518" strokeWidth="1.2" />
+        <line x1="22" y1="33" x2="23" y2="40" stroke="#3a2518" strokeWidth="1.2" />
+        {/* Second reindeer */}
+        <ellipse cx="42" cy="28" rx="8" ry="5" />
+        <circle cx="36" cy="22" r="4" />
+        <line x1="34" y1="18" x2="31" y2="12" stroke="#3a2518" strokeWidth="1.5" />
+        <line x1="31" y1="12" x2="29" y2="10" stroke="#3a2518" strokeWidth="1" />
+        <line x1="31" y1="12" x2="33" y2="10" stroke="#3a2518" strokeWidth="1" />
+        <line x1="38" y1="18" x2="36" y2="12" stroke="#3a2518" strokeWidth="1.5" />
+        <line x1="36" y1="12" x2="34" y2="10" stroke="#3a2518" strokeWidth="1" />
+        <line x1="36" y1="12" x2="38" y2="10" stroke="#3a2518" strokeWidth="1" />
+        <line x1="40" y1="33" x2="39" y2="40" stroke="#3a2518" strokeWidth="1.2" />
+        <line x1="44" y1="33" x2="45" y2="40" stroke="#3a2518" strokeWidth="1.2" />
+        {/* Rudolph nose */}
+        <circle cx="11" cy="23" r="1.5" fill="#ef4444" />
+      </g>
+      {/* Reins */}
+      <path d="M 28,26 L 50,26 Q 60,24 70,28" stroke="#8B7355" strokeWidth="0.8" fill="none" />
+      {/* Sleigh */}
+      <g>
+        <path d="M 65,20 L 95,20 Q 100,20 100,25 L 100,35 Q 100,38 97,38 L 60,38 Q 55,38 58,32 Z" fill="#dc2626" />
+        <path d="M 55,38 Q 50,42 55,44 L 105,44 Q 110,44 108,40 L 105,38" stroke="#8B0000" strokeWidth="2" fill="none" />
+        <path d="M 65,20 L 95,20 Q 100,20 100,22 L 100,24 L 63,24 Z" fill="#b91c1c" />
+      </g>
+      {/* Santa */}
+      <g>
+        {/* Body */}
+        <ellipse cx="82" cy="28" rx="10" ry="9" fill="#dc2626" />
+        {/* Belt */}
+        <rect x="72" y="32" width="20" height="3" fill="#1a1a1a" rx="1" />
+        <rect x="80" y="31" width="4" height="5" fill="#fbbf24" rx="0.5" />
+        {/* Head */}
+        <circle cx="82" cy="15" r="7" fill="#fcd9b6" />
+        {/* Hat */}
+        <path d="M 75,15 Q 75,6 82,4 Q 89,6 89,15 Z" fill="#dc2626" />
+        <rect x="73" y="14" width="18" height="3" fill="white" rx="1.5" />
+        <circle cx="82" cy="3" r="2.5" fill="white" />
+        {/* Beard */}
+        <ellipse cx="82" cy="20" rx="5" ry="4" fill="white" />
+        {/* Eyes */}
+        <circle cx="80" cy="14" r="0.8" fill="#1a1a1a" />
+        <circle cx="84" cy="14" r="0.8" fill="#1a1a1a" />
+      </g>
+      {/* Gift bag */}
+      <rect x="92" y="22" width="6" height="8" fill="#15803d" rx="1" />
+      <line x1="95" y1="22" x2="95" y2="30" stroke="#fbbf24" strokeWidth="0.8" />
+      <line x1="92" y1="26" x2="98" y2="26" stroke="#fbbf24" strokeWidth="0.8" />
+    </svg>
   </div>
 );
 
@@ -225,11 +325,16 @@ const ChristmasCountdown = () => {
         role="main"
         aria-label="Christmas countdown application"
       >
-        {/* Christmas lights across the top */}
+        {/* Christmas lights with sagging wire */}
         <ChristmasLights />
 
-        {/* Swinging ornament */}
-        <Ornament theme={theme} />
+        {/* Swinging ornaments */}
+        <Ornament theme={theme} side="right" />
+        <Ornament theme={theme} side="left" />
+
+        {/* Holly decorations */}
+        <Holly position="tl" />
+        <Holly position="br" />
 
         {/* Decorative icons */}
         <div
