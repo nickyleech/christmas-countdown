@@ -300,32 +300,3 @@
   pointer-events: none;
 }
 
-/* Holly decoration */
-.holly-corner {
-  position: absolute;
-  z-index: 31;
-  pointer-events: none;
-}
-
-.holly-corner-tl {
-  top: -4px;
-  left: -4px;
-}
-
-.holly-corner-tr {
-  top: -4px;
-  right: -4px;
-  transform: scaleX(-1);
-}
-
-.holly-corner-bl {
-  bottom: -4px;
-  left: -4px;
-  transform: rotate(180deg) scaleX(-1);
-}
-
-.holly-corner-br {
-  bottom: -4px;
-  right: -4px;
-  transform: rotate(180deg);
-}

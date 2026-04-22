@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Gift, Star, TreePine, Snowflake } from 'lucide-react';
+import { Gift, Star, TreePine, Snowflake, Heart, Sparkles, Bell as BellIcon, Candy } from 'lucide-react';
 import FallingSnow from './FallingSnow';
 import ParticleSystem from './ParticleSystem';
 import { useTheme } from '../contexts/ThemeContext';
@@ -80,111 +80,45 @@ const Ornament = ({ theme, side }) => {
   );
 };
 
-const Holly = ({ position }) => (
-  <div className={`holly-corner holly-corner-${position}`} aria-hidden="true">
-    <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-      {/* Large holly leaves */}
-      <ellipse cx="18" cy="36" rx="16" ry="7" fill="#15803d" transform="rotate(-30 18 36)" />
-      <ellipse cx="36" cy="22" rx="16" ry="7" fill="#16a34a" transform="rotate(20 36 22)" />
-      <ellipse cx="28" cy="44" rx="14" ry="6" fill="#166534" transform="rotate(-10 28 44)" />
-      {/* Leaf veins */}
-      <line x1="6" y1="32" x2="30" y2="40" stroke="#0f5c2e" strokeWidth="0.8" />
-      <line x1="22" y1="18" x2="50" y2="26" stroke="#0f7a3a" strokeWidth="0.8" />
-      <line x1="16" y1="40" x2="40" y2="48" stroke="#0f5c2e" strokeWidth="0.6" />
-      {/* Berries cluster */}
-      <circle cx="28" cy="28" r="4.5" fill="#dc2626" />
-      <circle cx="34" cy="34" r="4.5" fill="#dc2626" />
-      <circle cx="24" cy="34" r="3.5" fill="#b91c1c" />
-      <circle cx="30" cy="22" r="3" fill="#ef4444" />
-      <circle cx="36" cy="28" r="3" fill="#b91c1c" />
-      {/* Berry highlights */}
-      <circle cx="26.5" cy="26.5" r="1.5" fill="rgba(255,255,255,0.5)" />
-      <circle cx="32.5" cy="32.5" r="1.5" fill="rgba(255,255,255,0.5)" />
-      <circle cx="22.5" cy="32.5" r="1.2" fill="rgba(255,255,255,0.4)" />
-      <circle cx="29" cy="21" r="1" fill="rgba(255,255,255,0.4)" />
-    </svg>
-  </div>
-);
 
-// Inline SVG floating decorations
-const CandyCane = ({ className, style }) => (
-  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20,4 A6,6 0 0,0 8,4 L8,22" stroke="#dc2626" strokeWidth="4" strokeLinecap="round" fill="none" />
-    <path d="M20,4 A6,6 0 0,0 8,4 L8,22" stroke="white" strokeWidth="4" strokeLinecap="round" fill="none" strokeDasharray="3 3" />
-  </svg>
-);
+// Generate a wallpaper grid of floating lucide-react icons
+const ICON_POOL = [Snowflake, Star, Gift, TreePine, Heart, Sparkles, BellIcon, Candy];
+const COLOR_KEYS = ['primary', 'secondary', 'accent'];
 
-const Bell = ({ className, style }) => (
-  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16,3 L16,6" stroke="#c0a040" strokeWidth="1.5" />
-    <circle cx="16" cy="3" r="1.5" fill="#c0a040" />
-    <path d="M8,20 Q8,10 16,8 Q24,10 24,20 L8,20Z" fill="#fbbf24" />
-    <path d="M10,14 Q10,11 16,9.5" stroke="#fcd34d" strokeWidth="0.8" fill="none" />
-    <rect x="6" y="20" width="20" height="2" rx="1" fill="#f59e0b" />
-    <circle cx="16" cy="24" r="2.5" fill="#f59e0b" />
-  </svg>
-);
+// Seeded pseudo-random for consistent layout
+const seededRandom = (seed) => {
+  const x = Math.sin(seed * 9301 + 49297) * 49297;
+  return x - Math.floor(x);
+};
 
-const Stocking = ({ className, style }) => (
-  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10,2 L10,18 Q10,24 16,26 L22,28 Q26,29 27,25 L25,21 Q24,18 20,17 L20,2 Z" fill="#dc2626" />
-    <rect x="9" y="2" width="12" height="4" rx="1" fill="white" />
-    <path d="M12,4 L12,18" stroke="#b91c1c" strokeWidth="0.5" strokeDasharray="2 2" />
-    <path d="M18,4 L18,17" stroke="#b91c1c" strokeWidth="0.5" strokeDasharray="2 2" />
-  </svg>
-);
-
-const GingerbreadMan = ({ className, style }) => (
-  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="16" cy="7" r="5" fill="#c2884d" />
-    <rect x="12" y="11" width="8" height="10" rx="2" fill="#c2884d" />
-    <path d="M12,14 L5,18" stroke="#c2884d" strokeWidth="3" strokeLinecap="round" />
-    <path d="M20,14 L27,18" stroke="#c2884d" strokeWidth="3" strokeLinecap="round" />
-    <path d="M13,21 L10,28" stroke="#c2884d" strokeWidth="3" strokeLinecap="round" />
-    <path d="M19,21 L22,28" stroke="#c2884d" strokeWidth="3" strokeLinecap="round" />
-    <circle cx="14" cy="6" r="0.8" fill="#111" />
-    <circle cx="18" cy="6" r="0.8" fill="#111" />
-    <path d="M14,9 Q16,10.5 18,9" stroke="#111" strokeWidth="0.6" fill="none" />
-    <circle cx="16" cy="14" r="0.8" fill="#dc2626" />
-    <circle cx="16" cy="17" r="0.8" fill="#dc2626" />
-    <path d="M12,11.5 L20,11.5" stroke="white" strokeWidth="0.8" strokeDasharray="1.5 1" />
-  </svg>
-);
-
-const MiniTree = ({ className, style }) => (
-  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="16,2 22,12 10,12" fill="#15803d" />
-    <polygon points="16,7 24,18 8,18" fill="#16a34a" />
-    <polygon points="16,13 26,25 6,25" fill="#166534" />
-    <rect x="14" y="25" width="4" height="4" fill="#92400e" />
-    <circle cx="16" cy="5" r="1.5" fill="#fbbf24" />
-    <circle cx="13" cy="15" r="1" fill="#dc2626" />
-    <circle cx="19" cy="20" r="1" fill="#fbbf24" />
-    <circle cx="14" cy="22" r="0.8" fill="#3b82f6" />
-  </svg>
-);
-
-const Wreath = ({ className, style }) => (
-  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="16" cy="16" r="10" stroke="#15803d" strokeWidth="5" fill="none" />
-    <circle cx="16" cy="16" r="10" stroke="#16a34a" strokeWidth="3" fill="none" strokeDasharray="4 3" />
-    <circle cx="16" cy="6" r="2" fill="#dc2626" />
-    <circle cx="13" cy="6.5" r="1.8" fill="#b91c1c" />
-    <circle cx="19" cy="6.5" r="1.8" fill="#ef4444" />
-    <path d="M12,5 Q16,2 20,5" stroke="#dc2626" strokeWidth="1.5" fill="none" />
-  </svg>
-);
-
-const FLOATING_DECORATIONS = [
-  { Component: CandyCane, position: 'top-[10%] left-[6%]', size: 'w-10 h-10 md:w-14 md:h-14', opacity: 'opacity-50', delay: '0s', duration: '4s' },
-  { Component: Bell, position: 'top-[15%] right-[8%]', size: 'w-9 h-9 md:w-12 md:h-12', opacity: 'opacity-40', delay: '1.5s', duration: '3.5s' },
-  { Component: Stocking, position: 'bottom-[12%] left-[10%]', size: 'w-9 h-9 md:w-12 md:h-12', opacity: 'opacity-40', delay: '0.8s', duration: '5s' },
-  { Component: GingerbreadMan, position: 'bottom-[18%] right-[6%]', size: 'w-10 h-10 md:w-14 md:h-14', opacity: 'opacity-45', delay: '2s', duration: '4.5s' },
-  { Component: MiniTree, position: 'top-[40%] left-[3%]', size: 'w-8 h-8 md:w-11 md:h-11', opacity: 'opacity-30', delay: '0.5s', duration: '6s' },
-  { Component: Wreath, position: 'top-[35%] right-[4%]', size: 'w-8 h-8 md:w-11 md:h-11', opacity: 'opacity-25', delay: '3s', duration: '5.5s' },
-  { Component: CandyCane, position: 'bottom-[35%] left-[5%]', size: 'w-7 h-7 md:w-9 md:h-9', opacity: 'opacity-25', delay: '1s', duration: '4.2s' },
-  { Component: Bell, position: 'bottom-[40%] right-[5%]', size: 'w-7 h-7 md:w-9 md:h-9', opacity: 'opacity-30', delay: '2.5s', duration: '3.8s' },
-];
+const FLOATING_ICONS = [];
+const COLS = 8;
+const ROWS = 10;
+for (let row = 0; row < ROWS; row++) {
+  for (let col = 0; col < COLS; col++) {
+    const seed = row * COLS + col;
+    const r = (s) => seededRandom(seed + s * 137);
+    // Jitter position within the cell
+    const top = (row / ROWS) * 100 + r(1) * (100 / ROWS) * 0.6;
+    const left = (col / COLS) * 100 + r(2) * (100 / COLS) * 0.6;
+    const Icon = ICON_POOL[Math.floor(r(3) * ICON_POOL.length)];
+    const color = COLOR_KEYS[Math.floor(r(4) * COLOR_KEYS.length)];
+    const sizePx = 16 + Math.floor(r(5) * 20); // 16-35px
+    const opacityVal = 10 + Math.floor(r(6) * 20); // 10-29
+    const delay = (r(7) * 8).toFixed(1);
+    const duration = (3 + r(8) * 5).toFixed(1);
+    FLOATING_ICONS.push({
+      Icon,
+      top: `${top.toFixed(1)}%`,
+      left: `${left.toFixed(1)}%`,
+      color,
+      sizePx,
+      opacity: opacityVal,
+      delay: `${delay}s`,
+      duration: `${duration}s`,
+    });
+  }
+}
 
 const AnimatedNumber = ({ value, theme }) => (
   <span
@@ -336,14 +270,17 @@ const ChristmasCountdown = () => {
       <FallingSnow />
       <ParticleSystem />
 
-      {/* Floating SVG decorations */}
-      {mounted && FLOATING_DECORATIONS.map(({ Component, position, size, opacity, delay, duration }, i) => (
+      {/* Floating lucide icon wallpaper */}
+      {mounted && FLOATING_ICONS.map(({ Icon, top, left, color, sizePx, opacity, delay, duration }, i) => (
         <div
           key={i}
-          className={`absolute ${position} z-20 ${opacity} animate-float pointer-events-none`}
-          style={{ animationDelay: delay, animationDuration: duration }}
+          className="absolute z-10 animate-float pointer-events-none"
+          style={{ top, left, opacity: opacity / 100, animationDelay: delay, animationDuration: duration }}
         >
-          <Component className={`${size} transition-opacity duration-500`} />
+          <Icon
+            className={`${theme[color]} transition-colors duration-500`}
+            style={{ width: sizePx, height: sizePx }}
+          />
         </div>
       ))}
 
@@ -361,12 +298,6 @@ const ChristmasCountdown = () => {
         <Ornament theme={theme} side="left" />
         <Ornament theme={theme} side="right-inner" />
         <Ornament theme={theme} side="left-inner" />
-
-        {/* Holly decorations - all 4 corners */}
-        <Holly position="tl" />
-        <Holly position="tr" />
-        <Holly position="bl" />
-        <Holly position="br" />
 
         {/* Decorative icons */}
         <div
