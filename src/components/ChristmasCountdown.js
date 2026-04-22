@@ -15,6 +15,41 @@ const FESTIVE_QUOTES = [
   "Christmas waves a magic wand over this world.",
 ];
 
+const LIGHT_COLORS = ['#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff1a1a', '#00cc44', '#ffcc00'];
+
+const ChristmasLights = () => (
+  <div className="christmas-lights" aria-hidden="true">
+    <div className="light-wire" />
+    {LIGHT_COLORS.map((color, i) => (
+      <div
+        key={i}
+        className="light-bulb"
+        style={{
+          '--bulb-color': color,
+          '--twinkle-duration': `${1.5 + Math.random() * 2}s`,
+          '--twinkle-delay': `${Math.random() * 3}s`,
+          left: `${(i / (LIGHT_COLORS.length - 1)) * 100}%`,
+          transform: 'translateX(-50%)',
+        }}
+      />
+    ))}
+  </div>
+);
+
+const Ornament = ({ theme }) => (
+  <div className="ornament" aria-hidden="true">
+    <div className="ornament-string" />
+    <div className="ornament-cap" />
+    <div className="ornament-ball" style={{ '--ornament-color': theme.gradientColors[0] }} />
+  </div>
+);
+
+const SantaSleigh = () => (
+  <div className="santa-sleigh" aria-hidden="true">
+    🦌🦌🛷🎅
+  </div>
+);
+
 const AnimatedNumber = ({ value, theme }) => (
   <span
     key={value}
@@ -164,6 +199,7 @@ const ChristmasCountdown = () => {
     >
       <FallingSnow />
       <ParticleSystem />
+      <SantaSleigh />
 
       {/* Floating decorations */}
       {mounted && (
@@ -184,14 +220,20 @@ const ChristmasCountdown = () => {
       )}
 
       <main
-        className={`${theme.cardBg} ${theme.cardShadow} rounded-3xl p-8 md:p-10 max-w-3xl w-full text-center relative z-20 transition-all duration-500 ${theme.cardBorder} border animate-pulse-glow`}
+        className={`${theme.cardBg} ${theme.cardShadow} rounded-3xl p-8 md:p-10 max-w-3xl w-full text-center relative z-20 transition-all duration-500 ${theme.cardBorder} border animate-pulse-glow overflow-visible`}
         style={{ '--glow-color': theme.glow }}
         role="main"
         aria-label="Christmas countdown application"
       >
+        {/* Christmas lights across the top */}
+        <ChristmasLights />
+
+        {/* Swinging ornament */}
+        <Ornament theme={theme} />
+
         {/* Decorative icons */}
         <div
-          className={`flex justify-center mb-4 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+          className={`flex justify-center mb-4 mt-2 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
           role="img"
           aria-label="Christmas decorations"
         >
@@ -219,7 +261,7 @@ const ChristmasCountdown = () => {
               style={{ animationDelay: '0.2s' }}
             >
               <span key={quoteKey} className="inline-block animate-quote-fade-in">
-                "{FESTIVE_QUOTES[quoteIndex]}"
+                &ldquo;{FESTIVE_QUOTES[quoteIndex]}&rdquo;
               </span>
             </p>
 
@@ -231,13 +273,13 @@ const ChristmasCountdown = () => {
               <Divider theme={theme} />
               <div className="flex justify-between text-xs mb-1">
                 <span className={`${theme.text} font-display transition-colors duration-500`}>Dec 25</span>
-                <span className={`font-display font-bold transition-colors duration-500`}>
+                <span className="font-display font-bold transition-colors duration-500">
                   <span className="gradient-text" style={{ backgroundImage: theme.numberGradient }}>{progress}%</span>
                 </span>
               </div>
-              <div className="w-full h-1.5 rounded-full bg-black/10 overflow-hidden">
+              <div className="w-full h-2 rounded-full bg-black/10 overflow-hidden">
                 <div
-                  className="h-full rounded-full animate-progress-fill"
+                  className="h-full rounded-full animate-progress-fill candy-cane-bar"
                   style={{
                     '--progress': `${progress}%`,
                     width: `${progress}%`,

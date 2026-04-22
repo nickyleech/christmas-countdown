@@ -124,3 +124,183 @@
     inset 0 -1px 3px rgba(0, 0, 0, 0.05),
     0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+/* Christmas Lights */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1) drop-shadow(0 0 3px var(--bulb-color));
+  }
+  50% {
+    opacity: 0.4;
+    filter: brightness(0.6) drop-shadow(0 0 1px var(--bulb-color));
+  }
+}
+
+.christmas-lights {
+  position: absolute;
+  top: -2px;
+  left: 5%;
+  right: 5%;
+  height: 24px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.light-wire {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #555;
+  border-radius: 1px;
+}
+
+.light-bulb {
+  position: absolute;
+  top: 2px;
+  width: 10px;
+  height: 14px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  animation: twinkle var(--twinkle-duration, 2s) ease-in-out infinite;
+  animation-delay: var(--twinkle-delay, 0s);
+  background: var(--bulb-color);
+  box-shadow: 0 0 6px var(--bulb-color), 0 0 12px var(--bulb-color);
+}
+
+.light-bulb::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 5px;
+  background: #555;
+  border-radius: 2px 2px 0 0;
+}
+
+/* Santa Sleigh */
+@keyframes sleigh-fly {
+  0% {
+    transform: translateX(-150px) translateY(0px);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(50vw) translateY(-20px);
+    opacity: 0.7;
+  }
+  95% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(calc(100vw + 150px)) translateY(0px);
+    opacity: 0;
+  }
+}
+
+.santa-sleigh {
+  position: fixed;
+  top: 8%;
+  left: 0;
+  z-index: 15;
+  pointer-events: none;
+  animation: sleigh-fly 12s ease-in-out infinite;
+  animation-delay: 3s;
+  font-size: 1.5rem;
+  opacity: 0;
+  white-space: nowrap;
+}
+
+/* Candy cane stripes */
+@keyframes candy-stripe {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 0;
+  }
+}
+
+.candy-cane-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.candy-cane-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(255, 255, 255, 0.25) 4px,
+    rgba(255, 255, 255, 0.25) 8px
+  );
+  animation: candy-stripe 1s linear infinite;
+  border-radius: inherit;
+}
+
+/* Swinging ornament */
+@keyframes swing {
+  0%, 100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+.ornament {
+  position: absolute;
+  top: -6px;
+  right: 40px;
+  z-index: 31;
+  transform-origin: top center;
+  animation: swing 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.ornament-string {
+  width: 1.5px;
+  height: 18px;
+  background: #777;
+  margin: 0 auto;
+}
+
+.ornament-ball {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.4), transparent 50%),
+              var(--ornament-color, #dc2626);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15), inset 0 -2px 4px rgba(0,0,0,0.1);
+  margin: 0 auto;
+}
+
+.ornament-cap {
+  width: 10px;
+  height: 5px;
+  background: #c0a040;
+  border-radius: 2px 2px 0 0;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ornament-cap::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid #c0a040;
+  border-radius: 50%;
+  background: transparent;
+}
