@@ -87,65 +87,70 @@ const Holly = ({ position }) => (
 
 const SantaSleigh = () => (
   <div className="santa-sleigh" aria-hidden="true">
-    <svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-      {/* Reindeer silhouettes */}
-      <g fill="#3a2518" opacity="0.9">
-        {/* Lead reindeer */}
-        <ellipse cx="20" cy="28" rx="8" ry="5" />
-        <circle cx="14" cy="22" r="4" />
-        <line x1="12" y1="18" x2="9" y2="12" stroke="#3a2518" strokeWidth="1.5" />
-        <line x1="9" y1="12" x2="7" y2="10" stroke="#3a2518" strokeWidth="1" />
-        <line x1="9" y1="12" x2="11" y2="10" stroke="#3a2518" strokeWidth="1" />
-        <line x1="16" y1="18" x2="14" y2="12" stroke="#3a2518" strokeWidth="1.5" />
-        <line x1="14" y1="12" x2="12" y2="10" stroke="#3a2518" strokeWidth="1" />
-        <line x1="14" y1="12" x2="16" y2="10" stroke="#3a2518" strokeWidth="1" />
-        <line x1="18" y1="33" x2="17" y2="40" stroke="#3a2518" strokeWidth="1.2" />
-        <line x1="22" y1="33" x2="23" y2="40" stroke="#3a2518" strokeWidth="1.2" />
+    <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+      {/* All dark silhouette for clean look at any size */}
+      <g fill="#1a0a00">
+        {/* Lead reindeer - bold filled shape */}
+        <path d="M 8,32 Q 5,28 8,24 L 12,20 Q 14,18 16,20 L 18,24 Q 20,22 22,24
+                 L 28,22 Q 30,18 28,14 L 26,10 M 30,14 L 32,10
+                 M 28,22 Q 26,18 24,14 L 22,10 M 26,14 L 28,10" />
+        <ellipse cx="28" cy="36" rx="14" ry="8" />
+        <ellipse cx="16" cy="28" rx="7" ry="6" />
+        {/* Lead antlers */}
+        <path d="M 11,22 L 6,12 L 2,8 M 6,12 L 8,7 M 6,12 L 10,9" stroke="#1a0a00" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path d="M 17,20 L 14,10 L 10,6 M 14,10 L 16,5 M 14,10 L 18,7" stroke="#1a0a00" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        {/* Lead legs */}
+        <path d="M 22,43 L 20,54 M 34,43 L 36,54" stroke="#1a0a00" strokeWidth="3" strokeLinecap="round" />
+
         {/* Second reindeer */}
-        <ellipse cx="42" cy="28" rx="8" ry="5" />
-        <circle cx="36" cy="22" r="4" />
-        <line x1="34" y1="18" x2="31" y2="12" stroke="#3a2518" strokeWidth="1.5" />
-        <line x1="31" y1="12" x2="29" y2="10" stroke="#3a2518" strokeWidth="1" />
-        <line x1="31" y1="12" x2="33" y2="10" stroke="#3a2518" strokeWidth="1" />
-        <line x1="38" y1="18" x2="36" y2="12" stroke="#3a2518" strokeWidth="1.5" />
-        <line x1="36" y1="12" x2="34" y2="10" stroke="#3a2518" strokeWidth="1" />
-        <line x1="36" y1="12" x2="38" y2="10" stroke="#3a2518" strokeWidth="1" />
-        <line x1="40" y1="33" x2="39" y2="40" stroke="#3a2518" strokeWidth="1.2" />
-        <line x1="44" y1="33" x2="45" y2="40" stroke="#3a2518" strokeWidth="1.2" />
-        {/* Rudolph nose */}
-        <circle cx="11" cy="23" r="1.5" fill="#ef4444" />
+        <ellipse cx="62" cy="36" rx="14" ry="8" />
+        <ellipse cx="50" cy="28" rx="7" ry="6" />
+        {/* Second antlers */}
+        <path d="M 45,22 L 40,12 L 36,8 M 40,12 L 42,7 M 40,12 L 44,9" stroke="#1a0a00" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path d="M 51,20 L 48,10 L 44,6 M 48,10 L 50,5 M 48,10 L 52,7" stroke="#1a0a00" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        {/* Second legs */}
+        <path d="M 56,43 L 54,54 M 68,43 L 70,54" stroke="#1a0a00" strokeWidth="3" strokeLinecap="round" />
+
+        {/* Rudolph's red nose on lead reindeer */}
+        <circle cx="10" cy="27" r="3" fill="#ef4444" />
       </g>
-      {/* Reins */}
-      <path d="M 28,26 L 50,26 Q 60,24 70,28" stroke="#8B7355" strokeWidth="0.8" fill="none" />
-      {/* Sleigh */}
-      <g>
-        <path d="M 65,20 L 95,20 Q 100,20 100,25 L 100,35 Q 100,38 97,38 L 60,38 Q 55,38 58,32 Z" fill="#dc2626" />
-        <path d="M 55,38 Q 50,42 55,44 L 105,44 Q 110,44 108,40 L 105,38" stroke="#8B0000" strokeWidth="2" fill="none" />
-        <path d="M 65,20 L 95,20 Q 100,20 100,22 L 100,24 L 63,24 Z" fill="#b91c1c" />
-      </g>
-      {/* Santa */}
-      <g>
-        {/* Body */}
-        <ellipse cx="82" cy="28" rx="10" ry="9" fill="#dc2626" />
-        {/* Belt */}
-        <rect x="72" y="32" width="20" height="3" fill="#1a1a1a" rx="1" />
-        <rect x="80" y="31" width="4" height="5" fill="#fbbf24" rx="0.5" />
-        {/* Head */}
-        <circle cx="82" cy="15" r="7" fill="#fcd9b6" />
-        {/* Hat */}
-        <path d="M 75,15 Q 75,6 82,4 Q 89,6 89,15 Z" fill="#dc2626" />
-        <rect x="73" y="14" width="18" height="3" fill="white" rx="1.5" />
-        <circle cx="82" cy="3" r="2.5" fill="white" />
-        {/* Beard */}
-        <ellipse cx="82" cy="20" rx="5" ry="4" fill="white" />
-        {/* Eyes */}
-        <circle cx="80" cy="14" r="0.8" fill="#1a1a1a" />
-        <circle cx="84" cy="14" r="0.8" fill="#1a1a1a" />
-      </g>
-      {/* Gift bag */}
-      <rect x="92" y="22" width="6" height="8" fill="#15803d" rx="1" />
-      <line x1="95" y1="22" x2="95" y2="30" stroke="#fbbf24" strokeWidth="0.8" />
-      <line x1="92" y1="26" x2="98" y2="26" stroke="#fbbf24" strokeWidth="0.8" />
+
+      {/* Reins connecting to sleigh */}
+      <path d="M 42,34 C 60,32 80,30 100,36" stroke="#1a0a00" strokeWidth="1.5" fill="none" />
+      <path d="M 76,34 C 85,32 95,32 100,36" stroke="#1a0a00" strokeWidth="1.5" fill="none" />
+
+      {/* Sleigh body */}
+      <path d="M 100,28 L 170,28 Q 178,28 178,36 L 178,48 Q 178,52 174,52 L 95,52 Q 88,52 92,44 Z"
+            fill="#c41e1e" />
+      {/* Sleigh runner */}
+      <path d="M 88,52 Q 82,58 88,62 L 182,62 Q 190,62 186,56 L 182,52"
+            fill="#8B0000" />
+      {/* Runner blade */}
+      <path d="M 86,62 Q 80,64 86,66 L 192,66 Q 196,66 192,64 L 86,64 Z"
+            fill="#1a0a00" />
+      {/* Sleigh trim */}
+      <rect x="100" y="28" width="78" height="6" rx="2" fill="#a11b1b" />
+
+      {/* Santa silhouette in sleigh */}
+      <ellipse cx="145" cy="36" rx="16" ry="14" fill="#c41e1e" />
+      {/* Santa head */}
+      <circle cx="145" cy="18" r="10" fill="#fcd9b6" />
+      {/* Hat */}
+      <path d="M 135,18 Q 134,6 145,2 Q 156,6 155,18 Z" fill="#c41e1e" />
+      <rect x="133" y="16" width="24" height="5" rx="2.5" fill="white" />
+      <circle cx="145" cy="1" r="4" fill="white" />
+      {/* Beard */}
+      <ellipse cx="145" cy="26" rx="8" ry="6" fill="white" />
+      {/* Eyes */}
+      <circle cx="142" cy="17" r="1.2" fill="#1a1a1a" />
+      <circle cx="148" cy="17" r="1.2" fill="#1a1a1a" />
+      {/* Belt */}
+      <rect x="129" y="44" width="32" height="4" rx="1" fill="#1a1a1a" />
+      <rect x="143" y="43" width="6" height="6" rx="1" fill="#fbbf24" />
+
+      {/* Gift sack */}
+      <path d="M 160,24 Q 172,20 176,28 L 176,48 Q 176,50 174,50 L 162,50 Q 158,50 158,46 Z" fill="#15803d" />
+      <path d="M 162,24 Q 167,18 172,24" stroke="#fbbf24" strokeWidth="1.5" fill="none" />
     </svg>
   </div>
 );
