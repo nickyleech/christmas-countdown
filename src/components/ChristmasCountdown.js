@@ -106,80 +106,85 @@ const Holly = ({ position }) => (
   </div>
 );
 
-const Reindeer = ({ x, y }) => (
-  <g transform={`translate(${x},${y})`}>
-    {/* Body */}
-    <ellipse cx="0" cy="0" rx="12" ry="6" fill="#5c3a1e" />
-    {/* Head */}
-    <ellipse cx="-14" cy="-3" rx="5" ry="4" fill="#6b4226" />
-    {/* Antlers */}
-    <path d="M-16,-7 L-20,-16 L-17,-12 L-22,-14" stroke="#3d2b1f" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-    <path d="M-13,-7 L-10,-16 L-13,-12 L-8,-14" stroke="#3d2b1f" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-    {/* Legs */}
-    <line x1="-5" y1="6" x2="-7" y2="14" stroke="#4a2a10" strokeWidth="1.5" />
-    <line x1="5" y1="6" x2="3" y2="14" stroke="#4a2a10" strokeWidth="1.5" />
-    <line x1="-2" y1="6" x2="-4" y2="13" stroke="#4a2a10" strokeWidth="1.5" />
-    <line x1="8" y1="6" x2="6" y2="13" stroke="#4a2a10" strokeWidth="1.5" />
-    {/* Eye */}
-    <circle cx="-17" cy="-4" r="1" fill="#111" />
-    {/* Nose */}
-    <circle cx="-19" cy="-2" r="1.5" fill="#dc2626" />
-    {/* Tail */}
-    <path d="M12,0 Q16,-3 14,-6" stroke="#5c3a1e" strokeWidth="1" fill="none" />
-  </g>
+// Inline SVG floating decorations
+const CandyCane = ({ className, style }) => (
+  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20,4 A6,6 0 0,0 8,4 L8,22" stroke="#dc2626" strokeWidth="4" strokeLinecap="round" fill="none" />
+    <path d="M20,4 A6,6 0 0,0 8,4 L8,22" stroke="white" strokeWidth="4" strokeLinecap="round" fill="none" strokeDasharray="3 3" />
+  </svg>
 );
 
-const SantaSleigh = () => (
-  <div className="santa-sleigh" aria-hidden="true">
-    <svg viewBox="0 0 520 120" width="520" height="120" xmlns="http://www.w3.org/2000/svg" className="santa-sleigh-svg">
-      {/* 9 Reindeer in V-formation, facing left */}
-      {/* Lead reindeer (Rudolph) */}
-      <Reindeer x={45} y={45} />
-      {/* Row 2 */}
-      <Reindeer x={85} y={32} />
-      <Reindeer x={85} y={58} />
-      {/* Row 3 */}
-      <Reindeer x={125} y={25} />
-      <Reindeer x={125} y={65} />
-      {/* Row 4 */}
-      <Reindeer x={165} y={30} />
-      <Reindeer x={165} y={60} />
-      {/* Row 5 */}
-      <Reindeer x={205} y={35} />
-      <Reindeer x={205} y={55} />
-      {/* Reins connecting to sleigh */}
-      <path d="M215,40 Q260,42 280,48" stroke="#8B6914" strokeWidth="1.2" fill="none" />
-      <path d="M215,55 Q260,52 280,50" stroke="#8B6914" strokeWidth="1.2" fill="none" />
-      {/* Sleigh body */}
-      <path d="M280,35 L310,30 Q340,28 350,35 L360,42 Q365,50 360,55 L350,60 Q330,68 290,68 L270,65 Q260,60 265,50 Z" fill="#b91c1c" />
-      <path d="M265,50 Q260,60 270,65 L290,68 Q270,72 260,75 Q250,78 255,72 Q258,68 260,62 Z" fill="#991b1b" />
-      {/* Sleigh runner */}
-      <path d="M260,75 Q280,70 360,62 Q380,60 385,65 Q388,68 380,70 Q340,75 260,80 Q250,82 248,78 Q246,75 255,75 Z" fill="#1a1a1a" stroke="#333" strokeWidth="0.5" />
-      {/* Runner curl */}
-      <path d="M385,65 Q392,58 398,60 Q402,62 396,68 Q390,72 385,70" fill="#1a1a1a" />
-      {/* Santa body */}
-      <ellipse cx="320" cy="38" rx="18" ry="15" fill="#dc2626" />
-      {/* Santa head */}
-      <circle cx="310" cy="22" r="10" fill="#fcd5b0" />
-      {/* Santa hat */}
-      <path d="M300,22 Q305,8 320,5 Q325,4 322,10 Q318,16 315,20" fill="#dc2626" />
-      <circle cx="322" cy="5" r="3" fill="white" />
-      <path d="M298,22 Q305,20 318,20" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" />
-      {/* Santa beard */}
-      <path d="M302,26 Q305,34 310,32 Q315,34 318,26" fill="white" />
-      {/* Santa belt */}
-      <rect x="310" y="42" width="20" height="4" rx="1" fill="#1a1a1a" />
-      <rect x="318" y="41" width="6" height="6" rx="1" fill="#fbbf24" />
-      {/* Gift bag */}
-      <path d="M340,25 Q350,20 355,28 L358,45 Q355,52 345,50 L338,42 Z" fill="#15803d" />
-      <path d="M342,30 L355,35" stroke="#fbbf24" strokeWidth="1.5" />
-      <path d="M345,25 L352,42" stroke="#fbbf24" strokeWidth="1.5" />
-      {/* Santa arm waving */}
-      <path d="M305,32 Q295,28 290,20" stroke="#dc2626" strokeWidth="4" fill="none" strokeLinecap="round" />
-      <circle cx="289" cy="18" r="3" fill="#fcd5b0" />
-    </svg>
-  </div>
+const Bell = ({ className, style }) => (
+  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16,3 L16,6" stroke="#c0a040" strokeWidth="1.5" />
+    <circle cx="16" cy="3" r="1.5" fill="#c0a040" />
+    <path d="M8,20 Q8,10 16,8 Q24,10 24,20 L8,20Z" fill="#fbbf24" />
+    <path d="M10,14 Q10,11 16,9.5" stroke="#fcd34d" strokeWidth="0.8" fill="none" />
+    <rect x="6" y="20" width="20" height="2" rx="1" fill="#f59e0b" />
+    <circle cx="16" cy="24" r="2.5" fill="#f59e0b" />
+  </svg>
 );
+
+const Stocking = ({ className, style }) => (
+  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10,2 L10,18 Q10,24 16,26 L22,28 Q26,29 27,25 L25,21 Q24,18 20,17 L20,2 Z" fill="#dc2626" />
+    <rect x="9" y="2" width="12" height="4" rx="1" fill="white" />
+    <path d="M12,4 L12,18" stroke="#b91c1c" strokeWidth="0.5" strokeDasharray="2 2" />
+    <path d="M18,4 L18,17" stroke="#b91c1c" strokeWidth="0.5" strokeDasharray="2 2" />
+  </svg>
+);
+
+const GingerbreadMan = ({ className, style }) => (
+  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="7" r="5" fill="#c2884d" />
+    <rect x="12" y="11" width="8" height="10" rx="2" fill="#c2884d" />
+    <path d="M12,14 L5,18" stroke="#c2884d" strokeWidth="3" strokeLinecap="round" />
+    <path d="M20,14 L27,18" stroke="#c2884d" strokeWidth="3" strokeLinecap="round" />
+    <path d="M13,21 L10,28" stroke="#c2884d" strokeWidth="3" strokeLinecap="round" />
+    <path d="M19,21 L22,28" stroke="#c2884d" strokeWidth="3" strokeLinecap="round" />
+    <circle cx="14" cy="6" r="0.8" fill="#111" />
+    <circle cx="18" cy="6" r="0.8" fill="#111" />
+    <path d="M14,9 Q16,10.5 18,9" stroke="#111" strokeWidth="0.6" fill="none" />
+    <circle cx="16" cy="14" r="0.8" fill="#dc2626" />
+    <circle cx="16" cy="17" r="0.8" fill="#dc2626" />
+    <path d="M12,11.5 L20,11.5" stroke="white" strokeWidth="0.8" strokeDasharray="1.5 1" />
+  </svg>
+);
+
+const MiniTree = ({ className, style }) => (
+  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="16,2 22,12 10,12" fill="#15803d" />
+    <polygon points="16,7 24,18 8,18" fill="#16a34a" />
+    <polygon points="16,13 26,25 6,25" fill="#166534" />
+    <rect x="14" y="25" width="4" height="4" fill="#92400e" />
+    <circle cx="16" cy="5" r="1.5" fill="#fbbf24" />
+    <circle cx="13" cy="15" r="1" fill="#dc2626" />
+    <circle cx="19" cy="20" r="1" fill="#fbbf24" />
+    <circle cx="14" cy="22" r="0.8" fill="#3b82f6" />
+  </svg>
+);
+
+const Wreath = ({ className, style }) => (
+  <svg className={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="10" stroke="#15803d" strokeWidth="5" fill="none" />
+    <circle cx="16" cy="16" r="10" stroke="#16a34a" strokeWidth="3" fill="none" strokeDasharray="4 3" />
+    <circle cx="16" cy="6" r="2" fill="#dc2626" />
+    <circle cx="13" cy="6.5" r="1.8" fill="#b91c1c" />
+    <circle cx="19" cy="6.5" r="1.8" fill="#ef4444" />
+    <path d="M12,5 Q16,2 20,5" stroke="#dc2626" strokeWidth="1.5" fill="none" />
+  </svg>
+);
+
+const FLOATING_DECORATIONS = [
+  { Component: CandyCane, position: 'top-[10%] left-[6%]', size: 'w-10 h-10 md:w-14 md:h-14', opacity: 'opacity-50', delay: '0s', duration: '4s' },
+  { Component: Bell, position: 'top-[15%] right-[8%]', size: 'w-9 h-9 md:w-12 md:h-12', opacity: 'opacity-40', delay: '1.5s', duration: '3.5s' },
+  { Component: Stocking, position: 'bottom-[12%] left-[10%]', size: 'w-9 h-9 md:w-12 md:h-12', opacity: 'opacity-40', delay: '0.8s', duration: '5s' },
+  { Component: GingerbreadMan, position: 'bottom-[18%] right-[6%]', size: 'w-10 h-10 md:w-14 md:h-14', opacity: 'opacity-45', delay: '2s', duration: '4.5s' },
+  { Component: MiniTree, position: 'top-[40%] left-[3%]', size: 'w-8 h-8 md:w-11 md:h-11', opacity: 'opacity-30', delay: '0.5s', duration: '6s' },
+  { Component: Wreath, position: 'top-[35%] right-[4%]', size: 'w-8 h-8 md:w-11 md:h-11', opacity: 'opacity-25', delay: '3s', duration: '5.5s' },
+  { Component: CandyCane, position: 'bottom-[35%] left-[5%]', size: 'w-7 h-7 md:w-9 md:h-9', opacity: 'opacity-25', delay: '1s', duration: '4.2s' },
+  { Component: Bell, position: 'bottom-[40%] right-[5%]', size: 'w-7 h-7 md:w-9 md:h-9', opacity: 'opacity-30', delay: '2.5s', duration: '3.8s' },
+];
 
 const AnimatedNumber = ({ value, theme }) => (
   <span
@@ -330,37 +335,17 @@ const ChristmasCountdown = () => {
     >
       <FallingSnow />
       <ParticleSystem />
-      <SantaSleigh />
 
-      {/* Floating decorations - maxed out */}
-      {mounted && (
-        <>
-          <div className="absolute top-[10%] left-[6%] z-20 opacity-50 animate-float pointer-events-none" style={{ animationDelay: '0s', animationDuration: '4s' }}>
-            <Snowflake className={`w-10 h-10 md:w-14 md:h-14 ${theme.accent} animate-spin-slow transition-colors duration-500`} />
-          </div>
-          <div className="absolute top-[15%] right-[8%] z-20 opacity-40 animate-float pointer-events-none" style={{ animationDelay: '1.5s', animationDuration: '3.5s' }}>
-            <Star className={`w-9 h-9 md:w-12 md:h-12 ${theme.accent} transition-colors duration-500`} />
-          </div>
-          <div className="absolute bottom-[12%] left-[10%] z-20 opacity-40 animate-float pointer-events-none" style={{ animationDelay: '0.8s', animationDuration: '5s' }}>
-            <Gift className={`w-9 h-9 md:w-12 md:h-12 ${theme.primary} transition-colors duration-500`} />
-          </div>
-          <div className="absolute bottom-[18%] right-[6%] z-20 opacity-45 animate-float pointer-events-none" style={{ animationDelay: '2s', animationDuration: '4.5s' }}>
-            <TreePine className={`w-12 h-12 md:w-16 md:h-16 ${theme.secondary} transition-colors duration-500`} />
-          </div>
-          <div className="absolute top-[40%] left-[3%] z-20 opacity-30 animate-float pointer-events-none" style={{ animationDelay: '0.5s', animationDuration: '6s' }}>
-            <Star className={`w-6 h-6 md:w-8 md:h-8 ${theme.primary} animate-spin-slow transition-colors duration-500`} />
-          </div>
-          <div className="absolute top-[35%] right-[4%] z-20 opacity-25 animate-float pointer-events-none" style={{ animationDelay: '3s', animationDuration: '5.5s' }}>
-            <Snowflake className={`w-7 h-7 md:w-10 md:h-10 ${theme.accent} animate-spin-slow transition-colors duration-500`} />
-          </div>
-          <div className="absolute bottom-[35%] left-[5%] z-20 opacity-25 animate-float pointer-events-none" style={{ animationDelay: '1s', animationDuration: '4.2s' }}>
-            <TreePine className={`w-8 h-8 md:w-10 md:h-10 ${theme.secondary} transition-colors duration-500`} />
-          </div>
-          <div className="absolute bottom-[40%] right-[5%] z-20 opacity-30 animate-float pointer-events-none" style={{ animationDelay: '2.5s', animationDuration: '3.8s' }}>
-            <Gift className={`w-7 h-7 md:w-9 md:h-9 ${theme.primary} transition-colors duration-500`} />
-          </div>
-        </>
-      )}
+      {/* Floating SVG decorations */}
+      {mounted && FLOATING_DECORATIONS.map(({ Component, position, size, opacity, delay, duration }, i) => (
+        <div
+          key={i}
+          className={`absolute ${position} z-20 ${opacity} animate-float pointer-events-none`}
+          style={{ animationDelay: delay, animationDuration: duration }}
+        >
+          <Component className={`${size} transition-opacity duration-500`} />
+        </div>
+      ))}
 
       <main
         className={`${theme.cardBg} ${theme.cardShadow} rounded-3xl p-8 md:p-10 max-w-3xl w-full text-center relative z-20 transition-all duration-500 ${theme.cardBorder} border animate-pulse-glow overflow-visible`}

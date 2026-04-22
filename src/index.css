@@ -178,42 +178,6 @@
   border-radius: 2px 2px 0 0;
 }
 
-/* Santa Sleigh - flies right to left */
-@keyframes sleigh-fly {
-  0% {
-    right: -550px;
-    top: 4%;
-    opacity: 0;
-  }
-  5% {
-    opacity: 0.85;
-  }
-  95% {
-    opacity: 0.85;
-  }
-  100% {
-    right: calc(100vw + 550px);
-    top: 4%;
-    opacity: 0;
-  }
-}
-
-.santa-sleigh {
-  position: fixed;
-  right: -550px;
-  z-index: 15;
-  pointer-events: none;
-  animation: sleigh-fly 16s ease-in-out infinite;
-  animation-delay: 2s;
-  opacity: 0;
-  white-space: nowrap;
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
-}
-
-.santa-sleigh-svg {
-  display: block;
-}
-
 /* Candy cane stripes */
 @keyframes candy-stripe {
   0% {
