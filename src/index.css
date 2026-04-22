@@ -182,27 +182,18 @@
 @keyframes sleigh-fly {
   0% {
     right: -550px;
-    top: 5%;
+    top: 4%;
     opacity: 0;
   }
   5% {
     opacity: 0.85;
-  }
-  25% {
-    top: 3%;
-  }
-  50% {
-    top: 2%;
-  }
-  75% {
-    top: 4%;
   }
   95% {
     opacity: 0.85;
   }
   100% {
     right: calc(100vw + 550px);
-    top: 5%;
+    top: 4%;
     opacity: 0;
   }
 }
@@ -219,9 +210,7 @@
   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
 }
 
-.santa-sleigh-img {
-  width: 500px;
-  height: auto;
+.santa-sleigh-svg {
   display: block;
 }
 
