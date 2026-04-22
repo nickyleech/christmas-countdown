@@ -15,7 +15,7 @@ const FESTIVE_QUOTES = [
   "Christmas waves a magic wand over this world.",
 ];
 
-const LIGHT_COLORS = ['#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff1a1a', '#00cc44', '#ffcc00'];
+const LIGHT_COLORS = ['#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff69b4', '#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff69b4', '#ff1a1a', '#00cc44', '#ffcc00', '#1a8cff', '#ff69b4'];
 
 // Bulb positions along the sagging wire (x%, y in px from top)
 const BULB_POSITIONS = LIGHT_COLORS.map((_, i) => {
@@ -54,104 +54,65 @@ const ChristmasLights = () => (
   </div>
 );
 
-const Ornament = ({ theme, side }) => (
-  <div className={side === 'left' ? 'ornament-left' : 'ornament'} aria-hidden="true">
-    <div className="ornament-string" />
-    <div className="ornament-cap" />
-    <div
-      className="ornament-ball"
-      style={{ '--ornament-color': side === 'left' ? theme.gradientColors[2] : theme.gradientColors[0] }}
-    />
-  </div>
-);
+const Ornament = ({ theme, side }) => {
+  const posClass = side.startsWith('left') ? (side === 'left' ? 'ornament-left' : 'ornament-left-inner') : (side === 'right' ? 'ornament' : 'ornament-right-inner');
+  const colors = {
+    'left': theme.gradientColors[2],
+    'right': theme.gradientColors[0],
+    'left-inner': theme.gradientColors[0],
+    'right-inner': theme.gradientColors[2],
+  };
+  const sizes = {
+    'left': 22,
+    'right': 22,
+    'left-inner': 16,
+    'right-inner': 16,
+  };
+  return (
+    <div className={posClass} aria-hidden="true">
+      <div className="ornament-string" />
+      <div className="ornament-cap" />
+      <div
+        className="ornament-ball"
+        style={{ '--ornament-color': colors[side], '--ornament-size': `${sizes[side]}px` }}
+      />
+    </div>
+  );
+};
 
 const Holly = ({ position }) => (
   <div className={`holly-corner holly-corner-${position}`} aria-hidden="true">
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      {/* Holly leaves */}
-      <ellipse cx="10" cy="18" rx="8" ry="4" fill="#15803d" transform="rotate(-30 10 18)" />
-      <ellipse cx="18" cy="12" rx="8" ry="4" fill="#16a34a" transform="rotate(20 18 12)" />
+    <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+      {/* Large holly leaves */}
+      <ellipse cx="18" cy="36" rx="16" ry="7" fill="#15803d" transform="rotate(-30 18 36)" />
+      <ellipse cx="36" cy="22" rx="16" ry="7" fill="#16a34a" transform="rotate(20 36 22)" />
+      <ellipse cx="28" cy="44" rx="14" ry="6" fill="#166534" transform="rotate(-10 28 44)" />
       {/* Leaf veins */}
-      <line x1="4" y1="16" x2="16" y2="20" stroke="#0f5c2e" strokeWidth="0.5" />
-      <line x1="12" y1="10" x2="24" y2="14" stroke="#0f7a3a" strokeWidth="0.5" />
-      {/* Berries */}
-      <circle cx="14" cy="14" r="2.5" fill="#dc2626" />
-      <circle cx="17" cy="17" r="2.5" fill="#dc2626" />
-      <circle cx="12" cy="17" r="2" fill="#b91c1c" />
+      <line x1="6" y1="32" x2="30" y2="40" stroke="#0f5c2e" strokeWidth="0.8" />
+      <line x1="22" y1="18" x2="50" y2="26" stroke="#0f7a3a" strokeWidth="0.8" />
+      <line x1="16" y1="40" x2="40" y2="48" stroke="#0f5c2e" strokeWidth="0.6" />
+      {/* Berries cluster */}
+      <circle cx="28" cy="28" r="4.5" fill="#dc2626" />
+      <circle cx="34" cy="34" r="4.5" fill="#dc2626" />
+      <circle cx="24" cy="34" r="3.5" fill="#b91c1c" />
+      <circle cx="30" cy="22" r="3" fill="#ef4444" />
+      <circle cx="36" cy="28" r="3" fill="#b91c1c" />
       {/* Berry highlights */}
-      <circle cx="13.3" cy="13.3" r="0.8" fill="rgba(255,255,255,0.5)" />
-      <circle cx="16.3" cy="16.3" r="0.8" fill="rgba(255,255,255,0.5)" />
+      <circle cx="26.5" cy="26.5" r="1.5" fill="rgba(255,255,255,0.5)" />
+      <circle cx="32.5" cy="32.5" r="1.5" fill="rgba(255,255,255,0.5)" />
+      <circle cx="22.5" cy="32.5" r="1.2" fill="rgba(255,255,255,0.4)" />
+      <circle cx="29" cy="21" r="1" fill="rgba(255,255,255,0.4)" />
     </svg>
   </div>
 );
 
 const SantaSleigh = () => (
   <div className="santa-sleigh" aria-hidden="true">
-    <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
-      {/* All dark silhouette for clean look at any size */}
-      <g fill="#1a0a00">
-        {/* Lead reindeer - bold filled shape */}
-        <path d="M 8,32 Q 5,28 8,24 L 12,20 Q 14,18 16,20 L 18,24 Q 20,22 22,24
-                 L 28,22 Q 30,18 28,14 L 26,10 M 30,14 L 32,10
-                 M 28,22 Q 26,18 24,14 L 22,10 M 26,14 L 28,10" />
-        <ellipse cx="28" cy="36" rx="14" ry="8" />
-        <ellipse cx="16" cy="28" rx="7" ry="6" />
-        {/* Lead antlers */}
-        <path d="M 11,22 L 6,12 L 2,8 M 6,12 L 8,7 M 6,12 L 10,9" stroke="#1a0a00" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        <path d="M 17,20 L 14,10 L 10,6 M 14,10 L 16,5 M 14,10 L 18,7" stroke="#1a0a00" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        {/* Lead legs */}
-        <path d="M 22,43 L 20,54 M 34,43 L 36,54" stroke="#1a0a00" strokeWidth="3" strokeLinecap="round" />
-
-        {/* Second reindeer */}
-        <ellipse cx="62" cy="36" rx="14" ry="8" />
-        <ellipse cx="50" cy="28" rx="7" ry="6" />
-        {/* Second antlers */}
-        <path d="M 45,22 L 40,12 L 36,8 M 40,12 L 42,7 M 40,12 L 44,9" stroke="#1a0a00" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        <path d="M 51,20 L 48,10 L 44,6 M 48,10 L 50,5 M 48,10 L 52,7" stroke="#1a0a00" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-        {/* Second legs */}
-        <path d="M 56,43 L 54,54 M 68,43 L 70,54" stroke="#1a0a00" strokeWidth="3" strokeLinecap="round" />
-
-        {/* Rudolph's red nose on lead reindeer */}
-        <circle cx="10" cy="27" r="3" fill="#ef4444" />
-      </g>
-
-      {/* Reins connecting to sleigh */}
-      <path d="M 42,34 C 60,32 80,30 100,36" stroke="#1a0a00" strokeWidth="1.5" fill="none" />
-      <path d="M 76,34 C 85,32 95,32 100,36" stroke="#1a0a00" strokeWidth="1.5" fill="none" />
-
-      {/* Sleigh body */}
-      <path d="M 100,28 L 170,28 Q 178,28 178,36 L 178,48 Q 178,52 174,52 L 95,52 Q 88,52 92,44 Z"
-            fill="#c41e1e" />
-      {/* Sleigh runner */}
-      <path d="M 88,52 Q 82,58 88,62 L 182,62 Q 190,62 186,56 L 182,52"
-            fill="#8B0000" />
-      {/* Runner blade */}
-      <path d="M 86,62 Q 80,64 86,66 L 192,66 Q 196,66 192,64 L 86,64 Z"
-            fill="#1a0a00" />
-      {/* Sleigh trim */}
-      <rect x="100" y="28" width="78" height="6" rx="2" fill="#a11b1b" />
-
-      {/* Santa silhouette in sleigh */}
-      <ellipse cx="145" cy="36" rx="16" ry="14" fill="#c41e1e" />
-      {/* Santa head */}
-      <circle cx="145" cy="18" r="10" fill="#fcd9b6" />
-      {/* Hat */}
-      <path d="M 135,18 Q 134,6 145,2 Q 156,6 155,18 Z" fill="#c41e1e" />
-      <rect x="133" y="16" width="24" height="5" rx="2.5" fill="white" />
-      <circle cx="145" cy="1" r="4" fill="white" />
-      {/* Beard */}
-      <ellipse cx="145" cy="26" rx="8" ry="6" fill="white" />
-      {/* Eyes */}
-      <circle cx="142" cy="17" r="1.2" fill="#1a1a1a" />
-      <circle cx="148" cy="17" r="1.2" fill="#1a1a1a" />
-      {/* Belt */}
-      <rect x="129" y="44" width="32" height="4" rx="1" fill="#1a1a1a" />
-      <rect x="143" y="43" width="6" height="6" rx="1" fill="#fbbf24" />
-
-      {/* Gift sack */}
-      <path d="M 160,24 Q 172,20 176,28 L 176,48 Q 176,50 174,50 L 162,50 Q 158,50 158,46 Z" fill="#15803d" />
-      <path d="M 162,24 Q 167,18 172,24" stroke="#fbbf24" strokeWidth="1.5" fill="none" />
-    </svg>
+    <img
+      src={`${process.env.PUBLIC_URL}/santa-sleigh.png`}
+      alt=""
+      className="santa-sleigh-img"
+    />
   </div>
 );
 
@@ -306,20 +267,32 @@ const ChristmasCountdown = () => {
       <ParticleSystem />
       <SantaSleigh />
 
-      {/* Floating decorations */}
+      {/* Floating decorations - maxed out */}
       {mounted && (
         <>
-          <div className="absolute top-[12%] left-[8%] z-20 opacity-40 animate-float pointer-events-none" style={{ animationDelay: '0s', animationDuration: '4s' }}>
-            <Snowflake className={`w-8 h-8 md:w-10 md:h-10 ${theme.accent} animate-spin-slow transition-colors duration-500`} />
+          <div className="absolute top-[10%] left-[6%] z-20 opacity-50 animate-float pointer-events-none" style={{ animationDelay: '0s', animationDuration: '4s' }}>
+            <Snowflake className={`w-10 h-10 md:w-14 md:h-14 ${theme.accent} animate-spin-slow transition-colors duration-500`} />
           </div>
-          <div className="absolute top-[18%] right-[10%] z-20 opacity-30 animate-float pointer-events-none" style={{ animationDelay: '1.5s', animationDuration: '3.5s' }}>
-            <Star className={`w-7 h-7 md:w-9 md:h-9 ${theme.accent} transition-colors duration-500`} />
+          <div className="absolute top-[15%] right-[8%] z-20 opacity-40 animate-float pointer-events-none" style={{ animationDelay: '1.5s', animationDuration: '3.5s' }}>
+            <Star className={`w-9 h-9 md:w-12 md:h-12 ${theme.accent} transition-colors duration-500`} />
           </div>
-          <div className="absolute bottom-[15%] left-[12%] z-20 opacity-30 animate-float pointer-events-none" style={{ animationDelay: '0.8s', animationDuration: '5s' }}>
-            <Gift className={`w-7 h-7 md:w-8 md:h-8 ${theme.primary} transition-colors duration-500`} />
+          <div className="absolute bottom-[12%] left-[10%] z-20 opacity-40 animate-float pointer-events-none" style={{ animationDelay: '0.8s', animationDuration: '5s' }}>
+            <Gift className={`w-9 h-9 md:w-12 md:h-12 ${theme.primary} transition-colors duration-500`} />
           </div>
-          <div className="absolute bottom-[20%] right-[8%] z-20 opacity-35 animate-float pointer-events-none" style={{ animationDelay: '2s', animationDuration: '4.5s' }}>
-            <TreePine className={`w-9 h-9 md:w-11 md:h-11 ${theme.secondary} transition-colors duration-500`} />
+          <div className="absolute bottom-[18%] right-[6%] z-20 opacity-45 animate-float pointer-events-none" style={{ animationDelay: '2s', animationDuration: '4.5s' }}>
+            <TreePine className={`w-12 h-12 md:w-16 md:h-16 ${theme.secondary} transition-colors duration-500`} />
+          </div>
+          <div className="absolute top-[40%] left-[3%] z-20 opacity-30 animate-float pointer-events-none" style={{ animationDelay: '0.5s', animationDuration: '6s' }}>
+            <Star className={`w-6 h-6 md:w-8 md:h-8 ${theme.primary} animate-spin-slow transition-colors duration-500`} />
+          </div>
+          <div className="absolute top-[35%] right-[4%] z-20 opacity-25 animate-float pointer-events-none" style={{ animationDelay: '3s', animationDuration: '5.5s' }}>
+            <Snowflake className={`w-7 h-7 md:w-10 md:h-10 ${theme.accent} animate-spin-slow transition-colors duration-500`} />
+          </div>
+          <div className="absolute bottom-[35%] left-[5%] z-20 opacity-25 animate-float pointer-events-none" style={{ animationDelay: '1s', animationDuration: '4.2s' }}>
+            <TreePine className={`w-8 h-8 md:w-10 md:h-10 ${theme.secondary} transition-colors duration-500`} />
+          </div>
+          <div className="absolute bottom-[40%] right-[5%] z-20 opacity-30 animate-float pointer-events-none" style={{ animationDelay: '2.5s', animationDuration: '3.8s' }}>
+            <Gift className={`w-7 h-7 md:w-9 md:h-9 ${theme.primary} transition-colors duration-500`} />
           </div>
         </>
       )}
@@ -336,9 +309,13 @@ const ChristmasCountdown = () => {
         {/* Swinging ornaments */}
         <Ornament theme={theme} side="right" />
         <Ornament theme={theme} side="left" />
+        <Ornament theme={theme} side="right-inner" />
+        <Ornament theme={theme} side="left-inner" />
 
-        {/* Holly decorations */}
+        {/* Holly decorations - all 4 corners */}
         <Holly position="tl" />
+        <Holly position="tr" />
+        <Holly position="bl" />
         <Holly position="br" />
 
         {/* Decorative icons */}

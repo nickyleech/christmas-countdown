@@ -157,13 +157,13 @@
 
 .light-bulb {
   position: absolute;
-  width: 10px;
-  height: 14px;
+  width: 12px;
+  height: 16px;
   border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
   animation: twinkle var(--twinkle-duration, 2s) ease-in-out infinite;
   animation-delay: var(--twinkle-delay, 0s);
   background: var(--bulb-color);
-  box-shadow: 0 0 6px var(--bulb-color), 0 0 12px var(--bulb-color);
+  box-shadow: 0 0 8px var(--bulb-color), 0 0 16px var(--bulb-color), 0 0 24px var(--bulb-color);
 }
 
 .light-bulb::before {
@@ -181,47 +181,48 @@
 /* Santa Sleigh - flies right to left */
 @keyframes sleigh-fly {
   0% {
-    right: -200px;
-    top: 7%;
+    right: -550px;
+    top: 5%;
     opacity: 0;
   }
   5% {
-    opacity: 0.8;
+    opacity: 0.85;
   }
-  30% {
-    top: 5%;
+  25% {
+    top: 3%;
   }
   50% {
+    top: 2%;
+  }
+  75% {
     top: 4%;
   }
-  70% {
-    top: 5%;
-  }
   95% {
-    opacity: 0.8;
+    opacity: 0.85;
   }
   100% {
-    right: calc(100vw + 200px);
-    top: 7%;
+    right: calc(100vw + 550px);
+    top: 5%;
     opacity: 0;
   }
 }
 
 .santa-sleigh {
   position: fixed;
-  right: -200px;
+  right: -550px;
   z-index: 15;
   pointer-events: none;
-  animation: sleigh-fly 15s ease-in-out infinite;
-  animation-delay: 4s;
+  animation: sleigh-fly 16s ease-in-out infinite;
+  animation-delay: 2s;
   opacity: 0;
   white-space: nowrap;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
 }
 
-.santa-sleigh svg {
-  width: 200px;
+.santa-sleigh-img {
+  width: 500px;
   height: auto;
+  display: block;
 }
 
 /* Candy cane stripes */
@@ -282,8 +283,8 @@
 }
 
 .ornament-ball {
-  width: 22px;
-  height: 22px;
+  width: var(--ornament-size, 22px);
+  height: var(--ornament-size, 22px);
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.4), transparent 50%),
               var(--ornament-color, #dc2626);
@@ -324,6 +325,28 @@
   pointer-events: none;
 }
 
+.ornament-right-inner {
+  position: absolute;
+  top: -6px;
+  right: 100px;
+  z-index: 31;
+  transform-origin: top center;
+  animation: swing 2.8s ease-in-out infinite;
+  animation-delay: 0.5s;
+  pointer-events: none;
+}
+
+.ornament-left-inner {
+  position: absolute;
+  top: -6px;
+  left: 100px;
+  z-index: 31;
+  transform-origin: top center;
+  animation: swing 3.2s ease-in-out infinite;
+  animation-delay: 1.5s;
+  pointer-events: none;
+}
+
 /* Holly decoration */
 .holly-corner {
   position: absolute;
@@ -332,12 +355,24 @@
 }
 
 .holly-corner-tl {
-  top: 8px;
-  left: 8px;
+  top: -4px;
+  left: -4px;
+}
+
+.holly-corner-tr {
+  top: -4px;
+  right: -4px;
+  transform: scaleX(-1);
+}
+
+.holly-corner-bl {
+  bottom: -4px;
+  left: -4px;
+  transform: rotate(180deg) scaleX(-1);
 }
 
 .holly-corner-br {
-  bottom: 8px;
-  right: 8px;
+  bottom: -4px;
+  right: -4px;
   transform: rotate(180deg);
 }
