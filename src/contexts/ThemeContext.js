@@ -18,6 +18,7 @@ export const themes = {
     accent: 'text-yellow-400',
     text: 'text-gray-600',
     glow: 'rgba(220, 38, 38, 0.3)',
+    numberGradient: 'linear-gradient(135deg, #dc2626, #991b1b, #15803d)',
     snow: {
       color: 'rgba(255, 255, 255, 0.8)',
       count: 150,
@@ -41,6 +42,7 @@ export const themes = {
     accent: 'text-cyan-400',
     text: 'text-slate-600',
     glow: 'rgba(59, 130, 246, 0.3)',
+    numberGradient: 'linear-gradient(135deg, #2563eb, #4f46e5, #06b6d4)',
     snow: {
       color: 'rgba(200, 230, 255, 0.9)',
       count: 200,
@@ -68,6 +70,7 @@ export const themes = {
     accent: 'text-yellow-500',
     text: 'text-amber-800',
     glow: 'rgba(245, 158, 11, 0.4)',
+    numberGradient: 'linear-gradient(135deg, #d97706, #ea580c, #b91c1c)',
     snow: {
       color: 'rgba(255, 215, 0, 0.7)',
       count: 100,
@@ -95,6 +98,7 @@ export const themes = {
     accent: 'text-red-500',
     text: 'text-slate-600',
     glow: 'rgba(100, 116, 139, 0.15)',
+    numberGradient: 'linear-gradient(135deg, #334155, #475569, #64748b)',
     snow: {
       color: 'rgba(100, 116, 139, 0.3)',
       count: 75,
@@ -118,6 +122,7 @@ export const themes = {
     accent: 'text-yellow-400',
     text: 'text-slate-300',
     glow: 'rgba(34, 197, 94, 0.3)',
+    numberGradient: 'linear-gradient(135deg, #22c55e, #10b981, #f87171)',
     snow: {
       color: 'rgba(34, 197, 94, 0.4)',
       count: 120,
@@ -145,6 +150,7 @@ export const themes = {
     accent: 'text-yellow-400',
     text: 'text-purple-800',
     glow: 'rgba(236, 72, 153, 0.3)',
+    numberGradient: 'linear-gradient(135deg, #ec4899, #a855f7, #6366f1)',
     snow: {
       color: 'rgba(255, 20, 147, 0.6)',
       count: 80,

@@ -1,41 +1,76 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Gift, Star, TreePine, Snowflake } from 'lucide-react';
 import FallingSnow from './FallingSnow';
 import ParticleSystem from './ParticleSystem';
 import { useTheme } from '../contexts/ThemeContext';
 
+const FESTIVE_QUOTES = [
+  "The most wonderful time of the year is almost here!",
+  "May your days be merry and bright.",
+  "It's beginning to look a lot like Christmas...",
+  "All hearts come home for Christmas.",
+  "The magic of Christmas never ends.",
+  "Peace on Earth, goodwill to all.",
+  "Where there is love, there is Christmas.",
+  "Christmas waves a magic wand over this world.",
+];
+
 const AnimatedNumber = ({ value, theme }) => (
   <span
     key={value}
-    className="inline-block font-display font-black tabular-nums animate-slide-up"
+    className="inline-block font-display font-black tabular-nums animate-slide-up gradient-text"
+    style={{ backgroundImage: theme.numberGradient }}
   >
     {String(value).padStart(2, '0')}
   </span>
 );
 
-const TimeCard = ({ value, label, theme, delay }) => (
-  <div
-    className={`${theme.numberCardBg} backdrop-blur-sm rounded-2xl p-5 md:p-6
-      hover:shadow-xl transition-all duration-300 transform hover:scale-105
-      border border-white/20 animate-fade-in-up`}
-    style={{ animationDelay: `${delay}s` }}
-    tabIndex="0"
-  >
+const TimeCard = ({ value, label, theme, delay, isSeconds }) => {
+  const [pop, setPop] = useState(false);
+  const prevValue = useRef(value);
+
+  useEffect(() => {
+    if (isSeconds && value !== prevValue.current) {
+      setPop(true);
+      const timer = setTimeout(() => setPop(false), 300);
+      prevValue.current = value;
+      return () => clearTimeout(timer);
+    }
+  }, [value, isSeconds]);
+
+  return (
     <div
-      className={`text-5xl md:text-6xl font-display font-black ${theme.primary} transition-colors duration-500 overflow-hidden`}
-      aria-label={`${value} ${label}`}
+      className={`${theme.numberCardBg} backdrop-blur-sm rounded-2xl p-5 md:p-6
+        hover:shadow-xl transition-all duration-300 transform hover:scale-105
+        border border-white/20 animate-fade-in-up card-inner-glow
+        ${pop ? 'animate-tick-pop' : ''}`}
+      style={{ animationDelay: pop ? '0s' : `${delay}s` }}
+      tabIndex="0"
     >
-      <AnimatedNumber value={value} theme={theme} />
+      <div
+        className="text-5xl md:text-6xl font-display font-black transition-colors duration-500 overflow-hidden"
+        aria-label={`${value} ${label}`}
+      >
+        <AnimatedNumber value={value} theme={theme} />
+      </div>
+      <div className={`text-xs font-display font-semibold uppercase tracking-[0.2em] mt-2 ${theme.text} transition-colors duration-500`}>
+        {label}
+      </div>
     </div>
-    <div className={`text-sm font-display font-medium uppercase tracking-widest mt-2 ${theme.text} transition-colors duration-500`}>
-      {label}
-    </div>
-  </div>
-);
+  );
+};
 
 const ColonSeparator = ({ theme }) => (
   <div className="hidden md:flex items-center justify-center animate-colon-pulse">
     <span className={`text-4xl font-bold ${theme.primary} opacity-60 transition-colors duration-500`}>:</span>
+  </div>
+);
+
+const Divider = ({ theme }) => (
+  <div className="flex items-center gap-3 my-6 mx-auto max-w-md">
+    <div className="flex-1 h-px" style={{ background: `linear-gradient(90deg, transparent, ${theme.gradientColors[0]}40, transparent)` }} />
+    <Snowflake className={`w-4 h-4 ${theme.accent} animate-spin-slow opacity-50 transition-colors duration-500`} />
+    <div className="flex-1 h-px" style={{ background: `linear-gradient(90deg, transparent, ${theme.gradientColors[2]}40, transparent)` }} />
   </div>
 );
 
@@ -47,10 +82,21 @@ const ChristmasCountdown = () => {
     seconds: 0
   });
   const [mounted, setMounted] = useState(false);
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [quoteKey, setQuoteKey] = useState(0);
   const { theme, isTransitioning } = useTheme();
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Rotate quotes every 8 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setQuoteIndex((prev) => (prev + 1) % FESTIVE_QUOTES.length);
+      setQuoteKey((prev) => prev + 1);
+    }, 8000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -145,7 +191,7 @@ const ChristmasCountdown = () => {
       >
         {/* Decorative icons */}
         <div
-          className={`flex justify-center mb-6 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+          className={`flex justify-center mb-4 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
           role="img"
           aria-label="Christmas decorations"
         >
@@ -158,45 +204,54 @@ const ChristmasCountdown = () => {
 
         {/* Title */}
         <h1
-          className={`text-4xl md:text-6xl font-christmas font-bold ${theme.primary} mb-2 transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+          className={`text-4xl md:text-6xl font-christmas font-bold mb-1 transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
           style={{ animationDelay: '0.1s' }}
         >
-          {isChristmas ? 'Merry Christmas!' : 'Christmas Countdown'}
+          <span className="gradient-text" style={{ backgroundImage: theme.numberGradient }}>
+            {isChristmas ? 'Merry Christmas!' : 'Christmas Countdown'}
+          </span>
         </h1>
 
         {!isChristmas ? (
           <>
             <p
-              className={`text-lg font-display ${theme.text} mb-2 transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+              className={`text-base font-display italic ${theme.text} mb-0 transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
               style={{ animationDelay: '0.2s' }}
             >
-              The most wonderful time of the year is almost here!
+              <span key={quoteKey} className="inline-block animate-quote-fade-in">
+                "{FESTIVE_QUOTES[quoteIndex]}"
+              </span>
             </p>
 
             {/* Progress bar */}
             <div
-              className={`max-w-xs mx-auto mb-8 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+              className={`max-w-xs mx-auto mb-2 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
               style={{ animationDelay: '0.3s' }}
             >
+              <Divider theme={theme} />
               <div className="flex justify-between text-xs mb-1">
-                <span className={`${theme.text} font-display transition-colors duration-500`}>Last Christmas</span>
-                <span className={`${theme.primary} font-display font-bold transition-colors duration-500`}>{progress}%</span>
+                <span className={`${theme.text} font-display transition-colors duration-500`}>Dec 25</span>
+                <span className={`font-display font-bold transition-colors duration-500`}>
+                  <span className="gradient-text" style={{ backgroundImage: theme.numberGradient }}>{progress}%</span>
+                </span>
               </div>
-              <div className="w-full h-2 rounded-full bg-black/10 overflow-hidden">
+              <div className="w-full h-1.5 rounded-full bg-black/10 overflow-hidden">
                 <div
                   className="h-full rounded-full animate-progress-fill"
                   style={{
                     '--progress': `${progress}%`,
                     width: `${progress}%`,
-                    background: `linear-gradient(90deg, ${theme.gradientColors[0]}, ${theme.gradientColors[2]})`,
+                    background: theme.numberGradient,
                   }}
                 />
               </div>
             </div>
 
+            <Divider theme={theme} />
+
             {/* Countdown grid */}
             <div
-              className="flex justify-center items-stretch gap-3 md:gap-4 mb-8 flex-wrap"
+              className="flex justify-center items-stretch gap-3 md:gap-4 mb-6 flex-wrap"
               role="timer"
               aria-live="polite"
               aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds until Christmas`}
@@ -214,9 +269,16 @@ const ChristmasCountdown = () => {
               </div>
               <ColonSeparator theme={theme} />
               <div className="w-[calc(50%-0.5rem)] md:w-auto md:flex-1">
-                <TimeCard value={timeLeft.seconds} label="Seconds" theme={theme} delay={0.75} />
+                <TimeCard value={timeLeft.seconds} label="Seconds" theme={theme} delay={0.75} isSeconds />
               </div>
             </div>
+
+            <p
+              className={`text-sm font-display ${theme.text} opacity-60 transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+              style={{ animationDelay: '0.9s' }}
+            >
+              Time until Christmas Day
+            </p>
           </>
         ) : (
           <div
@@ -229,16 +291,15 @@ const ChristmasCountdown = () => {
           </div>
         )}
 
-        <div
-          className={`text-lg font-display ${theme.text} transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
-          style={{ animationDelay: '0.8s' }}
-          aria-live="polite"
-        >
-          {isChristmas
-            ? "Hope your day is filled with joy and wonder!"
-            : "Time until Christmas Day"
-          }
-        </div>
+        {isChristmas && (
+          <div
+            className={`text-lg font-display ${theme.text} transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+            style={{ animationDelay: '0.8s' }}
+            aria-live="polite"
+          >
+            Hope your day is filled with joy and wonder!
+          </div>
+        )}
       </main>
     </div>
   );

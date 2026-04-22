@@ -18,6 +18,8 @@ module.exports = {
         'spin-slow': 'spin-slow 6s linear infinite',
         'colon-pulse': 'colon-pulse 1s ease-in-out infinite',
         'progress-fill': 'progress-fill 1.5s ease-out forwards',
+        'tick-pop': 'tick-pop 0.3s ease-out',
+        'quote-fade-in': 'quote-fade-in 0.6s ease-out',
       },
     },
   },
