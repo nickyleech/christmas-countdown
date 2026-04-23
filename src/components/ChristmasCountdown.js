@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Gift, Star, TreePine, Snowflake, Heart, Sparkles, Bell as BellIcon, Candy } from 'lucide-react';
+import { Gift, Star, TreePine, Snowflake, Heart, Sparkles, Bell as BellIcon, Candy, Share2, Check } from 'lucide-react';
 import FallingSnow from './FallingSnow';
 import ParticleSystem from './ParticleSystem';
 import { useTheme } from '../contexts/ThemeContext';
@@ -84,6 +84,7 @@ const Ornament = ({ theme, side }) => {
 // Generate a wallpaper grid of floating lucide-react icons
 const ICON_POOL = [Snowflake, Star, Gift, TreePine, Heart, Sparkles, BellIcon, Candy];
 const COLOR_KEYS = ['primary', 'secondary', 'accent'];
+const ANIMATION_TYPES = ['float', 'icon-twinkle', 'icon-drift', 'icon-pulse'];
 
 // Seeded pseudo-random for consistent layout
 const seededRandom = (seed) => {
@@ -107,6 +108,9 @@ for (let row = 0; row < ROWS; row++) {
     const opacityVal = 10 + Math.floor(r(6) * 20); // 10-29
     const delay = (r(7) * 8).toFixed(1);
     const duration = (3 + r(8) * 5).toFixed(1);
+    const rotation = Math.floor(r(9) * 50) - 25; // -25 to 25 degrees
+    const filled = r(10) < 0.3; // ~30% filled
+    const animation = ANIMATION_TYPES[Math.floor(r(11) * ANIMATION_TYPES.length)];
     FLOATING_ICONS.push({
       Icon,
       top: `${top.toFixed(1)}%`,
@@ -116,9 +120,65 @@ for (let row = 0; row < ROWS; row++) {
       opacity: opacityVal,
       delay: `${delay}s`,
       duration: `${duration}s`,
+      rotation,
+      filled,
+      animation,
     });
   }
 }
+
+// Milestone messages based on days remaining
+const getMilestoneMessage = (days) => {
+  if (days === 1) return "Tomorrow is Christmas!";
+  if (days <= 3) return "Christmas is almost here!";
+  if (days === 7) return "Only one week to go!";
+  if (days <= 7) return "Less than a week away!";
+  if (days === 12) return "12 days of Christmas!";
+  if (days <= 14) return "Two weeks until the magic!";
+  if (days === 25) return "Less than a month away!";
+  if (days === 30) return "One month until Christmas!";
+  if (days === 50) return "50 days and counting!";
+  if (days === 100) return "100 days until Christmas!";
+  return null;
+};
+
+// Share button component
+const ShareButton = ({ days, theme }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const text = `Only ${days} days until Christmas! 🎄🎅`;
+    const url = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Christmas Countdown', text, url });
+      } catch (e) {
+        // User cancelled share
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(`${text}\n${url}`);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (e) {
+        // Fallback
+      }
+    }
+  };
+
+  return (
+    <button
+      onClick={handleShare}
+      className={`share-button inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-display font-semibold
+        ${theme.numberCardBg} ${theme.text} border border-white/20 backdrop-blur-sm card-inner-glow`}
+      aria-label="Share countdown"
+    >
+      {copied ? <Check className="w-4 h-4" /> : <Share2 className="w-4 h-4" />}
+      {copied ? 'Copied!' : 'Share'}
+    </button>
+  );
+};
 
 const AnimatedNumber = ({ value, theme }) => (
   <span
@@ -271,15 +331,27 @@ const ChristmasCountdown = () => {
       <ParticleSystem />
 
       {/* Floating lucide icon wallpaper */}
-      {mounted && FLOATING_ICONS.map(({ Icon, top, left, color, sizePx, opacity, delay, duration }, i) => (
+      {mounted && FLOATING_ICONS.map(({ Icon, top, left, color, sizePx, opacity, delay, duration, rotation, filled, animation }, i) => (
         <div
           key={i}
-          className="absolute z-10 animate-float pointer-events-none"
-          style={{ top, left, opacity: opacity / 100, animationDelay: delay, animationDuration: duration }}
+          className="absolute z-10 pointer-events-none"
+          style={{
+            top, left,
+            '--icon-opacity': opacity / 100,
+            '--icon-rotate': `${rotation}deg`,
+            opacity: opacity / 100,
+            animationName: animation,
+            animationDelay: delay,
+            animationDuration: duration,
+            animationTimingFunction: 'ease-in-out',
+            animationIterationCount: 'infinite',
+            transform: `rotate(${rotation}deg)`,
+          }}
         >
           <Icon
             className={`${theme[color]} transition-colors duration-500`}
             style={{ width: sizePx, height: sizePx }}
+            {...(filled ? { fill: 'currentColor' } : {})}
           />
         </div>
       ))}
@@ -333,14 +405,26 @@ const ChristmasCountdown = () => {
               </span>
             </p>
 
-            {/* Progress bar */}
+            {/* Milestone message */}
+            {getMilestoneMessage(timeLeft.days) && (
+              <p
+                className={`text-sm font-display font-bold mb-1 transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+                style={{ animationDelay: '0.25s' }}
+              >
+                <span className="gradient-text" style={{ backgroundImage: theme.numberGradient }}>
+                  {getMilestoneMessage(timeLeft.days)}
+                </span>
+              </p>
+            )}
+
+            {/* Progress bar — shows how close we are TO Christmas */}
             <div
               className={`max-w-xs mx-auto mb-2 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
               style={{ animationDelay: '0.3s' }}
             >
               <Divider theme={theme} />
               <div className="flex justify-between text-xs mb-1">
-                <span className={`${theme.text} font-display transition-colors duration-500`}>Dec 25</span>
+                <span className={`${theme.text} font-display transition-colors duration-500`}>Progress to Dec 25</span>
                 <span className="font-display font-bold transition-colors duration-500">
                   <span className="gradient-text" style={{ backgroundImage: theme.numberGradient }}>{progress}%</span>
                 </span>
@@ -389,6 +473,13 @@ const ChristmasCountdown = () => {
             >
               Time until Christmas Day
             </p>
+
+            <div
+              className={`mt-4 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
+              style={{ animationDelay: '1s' }}
+            >
+              <ShareButton days={timeLeft.days} theme={theme} />
+            </div>
           </>
         ) : (
           <div
