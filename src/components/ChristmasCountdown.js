@@ -398,7 +398,7 @@ const ChristmasCountdown = () => {
           <>
             <p
               className={`text-base font-display italic ${theme.text} mb-0 transition-colors duration-500 ${mounted ? 'animate-fade-in-up' : 'opacity-0'}`}
-              style={{ animationDelay: '0.2s' }}
+              style={{ animationDelay: '0.2s', minHeight: '3em' }}
             >
               <span key={quoteKey} className="inline-block animate-quote-fade-in">
                 &ldquo;{FESTIVE_QUOTES[quoteIndex]}&rdquo;
